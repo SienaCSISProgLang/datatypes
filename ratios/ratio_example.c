@@ -18,13 +18,13 @@ int main(int argc, char *argv[]) {
   /* pointers to ratios */
   ratio *r1, *r2, *ans;
 
-  /* pointer to a dynamically-allocated array of ratio pointers */
+  /* pointer to a dynamic heap-allocated array of ratio pointers */
   ratio **r_array1;
 
-  /* a statically-allocated array of pointers to ratios */
+  /* a dynamic stack-allocated array of pointers to ratios */
   ratio *r_array2[3];
 
-  /* a statically-allocated array of ratios (rather than pointers) */
+  /* a dynamic stack-allocated array of ratios (rather than pointers) */
   ratio r_array3[3];
 
   int i;
@@ -78,7 +78,7 @@ int main(int argc, char *argv[]) {
   }
 
   /* before we clean up from this one, let's store pointers to two of
-     these three ratios in our static array of pointers to ratios */
+     these three ratios in our stack-allocated array of pointers to ratios */
   r_array2[0] = r_array1[0];
   r_array2[1] = r_array1[1];
 
@@ -88,8 +88,8 @@ int main(int argc, char *argv[]) {
   /* and now we'll give back the memory for our dynamic array */
   free(r_array1);
 
-  /* Now, we'll add the two in the static array and store the pointer
-     to the answer in the third */
+  /* Now, we'll add the two in the stack-allocated array and store the
+     pointer to the answer in the third */
   r_array2[2] = add_ratios(r_array2[0], r_array2[1]);
 
   print_ratio(r_array2[0]);
@@ -106,8 +106,7 @@ int main(int argc, char *argv[]) {
 
   /* and r_array2 does not need to be cleaned up */
 
-  /* Finally, we experiment with the static array of
-     statically-allocated ratios */
+  /* Finally, we experiment with the stack-allocated array of ratios */
   /* these need to be dealt with differently! */
   r_array3[0].numerator = 10;
   r_array3[0].denominator = 13;
@@ -125,7 +124,7 @@ int main(int argc, char *argv[]) {
     printf("\n");
   }
 
-  /* and none of these need to be cleaned up, since these statically-allocated
+  /* and none of these need to be cleaned up, since these stack-allocated
      structures will be deallocated automatically when main returns */
 
   return 0;
